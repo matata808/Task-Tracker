@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 class Main {
     public static void main(String[] args) throws IOException {
+        TaskList.reader();
 
         while (true) {
             Scanner scan = new Scanner(System.in);
@@ -35,7 +36,7 @@ class Main {
                 } else {
                     TaskList.showList();
                 }
-            } else if (input.equals("delete")) {
+            } else if (parts[0].equals("delete")) {
                 var toRemove = Integer.parseInt(parts[1].trim());
                 TaskList.removeFromList(toRemove);
 

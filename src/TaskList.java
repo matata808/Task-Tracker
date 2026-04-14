@@ -3,6 +3,8 @@ package src;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class TaskList {
     private static ArrayList<Tasks> list = new ArrayList<>();
@@ -83,15 +85,48 @@ public class TaskList {
     }
 
     public static void writer() throws FileNotFoundException, IOException{
-        FileOutputStream fileOutputStream = new FileOutputStream(output);
-        PrintWriter printWriter = new PrintWriter(fileOutputStream);
+        JSONArray jsonArray = new JSONArray();
+        for (Tasks task : list){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id",task.getId());
+            jsonObject.put("description", task.getDescription());
+            jsonObject.put("state",task.getState());
+            jsonObject.put("createdAt",task.getCreatedAt().toString());
 
-        for (Tasks i : getList()) {
-            printWriter.println(i);
+            if (task.getUpdatedAt() != null){
+                jsonObject.put("UpdatedAt",task.getUpdatedAt().toString());
+            }
+            jsonArray.put(jsonObject);
         }
+        FileWriter writer = new FileWriter(output);
+        writer.write(jsonArray.toString(2));
+        writer.close();
 
-        printWriter.close();
-        fileOutputStream.close();
+    }
+
+    public static void reader() throws IOException{
+        if(!output.exists()) return;
+
+        BufferedReader reader = new BufferedReader(new FileReader(output));
+        StringBuilder builder = new StringBuilder();
+        String line;
+
+        while((line = reader.readLine()) != null){
+            builder.append(line);
+        }
+        reader.close();
+
+
+        JSONArray jsonArray = new JSONArray(builder.toString());
+        for(int i=0; i < jsonArray.length(); i++) {
+            JSONObject object = jsonArray.getJSONObject(i);
+            Tasks task = new Tasks();
+            task.setId(object.getInt("id"));
+            task.setDescription(object.getString("description"));
+            task.setState(object.getString("state"));
+            task.setCreatedAt(LocalDateTime.parse(object.getString("createdAt")));
+            list.add(task);
+        }
 
     }
 

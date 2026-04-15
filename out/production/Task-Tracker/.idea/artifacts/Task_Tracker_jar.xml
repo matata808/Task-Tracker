@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Task-Tracker:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Task_Tracker_jar</output-path>
+    <root id="archive" name="Task-Tracker.jar">
+      <element id="module-output" name="Task-Tracker" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/json-20251224.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

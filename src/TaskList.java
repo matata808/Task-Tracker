@@ -25,12 +25,12 @@ public class TaskList {
     /**
      * Internal list storing all tasks in memory.
      */
-    private static ArrayList<Tasks> list = new ArrayList<>();
+    private static final ArrayList<Tasks> list = new ArrayList<>();
 
     /**
      * Output file used for persistence.
      */
-    private static File output = new File("output.json");
+    private static final File output = new File("output.json");
 
     /**
      * Returns the current list of tasks.
@@ -118,10 +118,10 @@ public class TaskList {
      * @throws IOException if writing to file fails
      */
     public static void updateList(int index, String updatedTask) throws IOException {
-        for(int i = 0; i < list.size(); i++){
-            if(list.get(i).getId() == index){
-                list.get(i).setDescription(updatedTask);
-                list.get(i).setUpdatedAt(LocalDateTime.now());
+        for (Tasks tasks : list) {
+            if (tasks.getId() == index) {
+                tasks.setDescription(updatedTask);
+                tasks.setUpdatedAt(LocalDateTime.now());
                 break;
             }
         }
@@ -136,23 +136,15 @@ public class TaskList {
      * @throws IOException if writing to file fails
      */
     public static void markTask(int index, String markedTask) throws IOException{
-        for(int i = 0; i < list.size(); i++){
-            if(list.get(i).getId() == index){
-                list.get(i).setState(markedTask);
+        for (Tasks tasks : list) {
+            if (tasks.getId() == index) {
+                tasks.setState(markedTask);
                 break;
             }
         }
         writer();
     }
 
-    /**
-     * Returns the output file used for persistence.
-     *
-     * @return the JSON output file
-     */
-    public static File getOutput() {
-        return output;
-    }
 
     /**
      * Writes the current task list to a JSON file.

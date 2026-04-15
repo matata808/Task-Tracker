@@ -2,6 +2,8 @@
 
 A simple command-line application to track and manage your tasks. Tasks are saved locally in a `output.json` file so they persist between sessions.
 
+Project-URL: https://roadmap.sh/projects/task-tracker
+
 ## Requirements
 
 - Java 11 or higher
